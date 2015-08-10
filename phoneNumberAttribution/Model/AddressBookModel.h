@@ -35,4 +35,6 @@
 
 - (void)restoreAddressBook;
 
+- (NSString *)attributionWithPhoneNumber:(NSString *)phoneNumber;
+
 @end

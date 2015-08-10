@@ -12,8 +12,8 @@
 
 #define IsPad               (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
-#define DeviceWidth         IsPad ? 320 : [UIScreen mainScreen].bounds.size.width
-#define DeviceHeight        IsPad ? 480 : [UIScreen mainScreen].bounds.size.height
+#define DeviceWidth         (IsPad ? 320 : [UIScreen mainScreen].bounds.size.width)
+#define DeviceHeight        (IsPad ? 480 : [UIScreen mainScreen].bounds.size.height)
 
 #define StatusBarHeight     20
 #define NaviBarHeight       44

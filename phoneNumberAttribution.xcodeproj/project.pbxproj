@@ -32,6 +32,7 @@
 		DEF0B75F1B73408600631889 /* MenuBtnImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B75E1B73408600631889 /* MenuBtnImage.png */; };
 		DEF0B7641B73469100631889 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF0B7631B73469100631889 /* MenuView.m */; };
 		DEF0B7661B73489800631889 /* MenuBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B7651B73489800631889 /* MenuBackImage.png */; };
+		DEFF77E41B78567400A9DAB9 /* MainTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		DEF0B7621B73469100631889 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuView.h; path = Views/Menu/MenuView.h; sourceTree = "<group>"; };
 		DEF0B7631B73469100631889 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuView.m; path = Views/Menu/MenuView.m; sourceTree = "<group>"; };
 		DEF0B7651B73489800631889 /* MenuBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuBackImage.png; path = Resources/Image/MenuBackImage.png; sourceTree = "<group>"; };
+		DEFF77E21B78567400A9DAB9 /* MainTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTableFooterView.h; path = Views/Main/MainTableFooterView.h; sourceTree = "<group>"; };
+		DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTableFooterView.m; path = Views/Main/MainTableFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +253,8 @@
 				DEEF935C1B719A20005D369F /* MainTableViewCell.m */,
 				DEEF93621B71A829005D369F /* MainTableHeaderView.h */,
 				DEEF93631B71A829005D369F /* MainTableHeaderView.m */,
+				DEFF77E21B78567400A9DAB9 /* MainTableFooterView.h */,
+				DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				DEEF93611B71A505005D369F /* ImageHelper.m in Sources */,
 				DEEF93481B719557005D369F /* RootViewController.m in Sources */,
 				DEF0B7411B72E99600631889 /* SVIndefiniteAnimatedView.m in Sources */,
+				DEFF77E41B78567400A9DAB9 /* MainTableFooterView.m in Sources */,
 				DEEF93521B719733005D369F /* RootNavigationController.m in Sources */,
 				DEEF93551B719807005D369F /* StringHelper.m in Sources */,
 				DEEF93641B71A829005D369F /* MainTableHeaderView.m in Sources */,

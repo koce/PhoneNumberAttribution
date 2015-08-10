@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#define TextFieldCellHeight     49
+
 @interface MainTableViewCell : UITableViewCell
+
+@property(nonatomic, strong) UITextField*       textField;
+
+- (void)showTextFieldView;
+- (void)dismissTextFieldView;
 
 @end

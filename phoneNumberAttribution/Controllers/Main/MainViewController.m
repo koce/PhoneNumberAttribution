@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "MainTableViewCell.h"
 #import "MainTableHeaderView.h"
+#import "MainTableFooterView.h"
 #import "AddressBookModel.h"
 #import "AlertView.h"
 #import "MenuView.h"
@@ -18,7 +19,12 @@
     
     AlertView*              _alertView;
     MenuView*               _menuView;
+    MainTableFooterView*    _footerView;
     
+    MainTableViewCell*      _textFieldCell;
+    UITapGestureRecognizer* _tapBg;
+    
+    BOOL                    _areaCodeLenIsThree;
 }
 
 @end
@@ -43,6 +49,18 @@
     [self initUI];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self addKeyboardEventObserver];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self removeKeyboardEventObserver];
+}
+
 #pragma mark -- UI
 - (void)initUI
 {
@@ -51,6 +69,8 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    
+    _tapBg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignAllFirstResponder)];
     
     _alertView = [[AlertView alloc] init];
     _alertView.alertDelegate = self;
@@ -62,7 +82,7 @@
 #pragma mark -- UITableViewDelegate & UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -83,7 +103,7 @@
     if (section == 0){
         return 0.1;
     }
-    return 20;
+    return FooterViewHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -91,7 +111,7 @@
     if (indexPath.section == 0) {
         return 44;
     }
-    return 88;
+    return TextFieldCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,6 +128,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     if (indexPath.section == 0) {
+        [cell dismissTextFieldView];
         switch (indexPath.row) {
             case 0:{
                 cell.textLabel.text = @"更新通讯录";
@@ -122,6 +143,10 @@
             default:
                 break;
         }
+    }else{
+        [cell showTextFieldView];
+        cell.textField.delegate = self;
+        _textFieldCell = cell;
     }
     
     return cell;
@@ -142,8 +167,9 @@
     if (section == 0) {
         return [[UIView alloc] init];
     }
-    
-    return nil;
+    _footerView = [[MainTableFooterView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, DeviceHeight)];
+    [_footerView updateTitle:@""];
+    return _footerView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -172,6 +198,55 @@
 }
 
 #pragma mark -- UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *str = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSString *result;
+    if ([str hasPrefix:@"0"]) {//电话号码
+        if (str.length == 3 && !_footerView.hasTitle) {
+            result = [[AddressBookModel sharedManager] attributionWithPhoneNumber:str];
+            if (![result isEqualToString:@""]) {
+                _areaCodeLenIsThree = YES;
+            }
+        }else if (str.length == 4 && !_footerView.hasTitle){
+            result = [[AddressBookModel sharedManager] attributionWithPhoneNumber:str];
+            if (![result isEqualToString:@""]) {
+                _areaCodeLenIsThree = NO;
+            }
+        }else if (str.length > 11 && _areaCodeLenIsThree){
+            result = @"";
+        }else if (str.length > 12){
+            result = @"";
+        }else if (str.length == 11){
+            result = [[AddressBookModel sharedManager] attributionWithPhoneNumber:str];
+            if (![result isEqualToString:@""]) {
+                _areaCodeLenIsThree = YES;
+            }
+        }else if (str.length == 12){
+            result = [[AddressBookModel sharedManager] attributionWithPhoneNumber:str];
+            if (![result isEqualToString:@""]) {
+                _areaCodeLenIsThree = NO;
+            }
+        }else if (str.length < 4 && !_areaCodeLenIsThree){
+            result = @"";
+        }else if (str.length < 3 && _areaCodeLenIsThree){
+            result = @"";
+        }
+        
+    }else if ([str hasPrefix:@"1"]){//手机号码
+        if ((str.length == 7 || str.length == 11) && !_footerView.hasTitle) {
+            result = [[AddressBookModel sharedManager] attributionWithPhoneNumber:str];
+        }else if (str.length > 11){
+            result = @"";
+        }else if (str.length < 7){
+            result = @"";
+        }
+    }
+    if (result) {
+        [_footerView updateTitle:result];
+    }
+    return YES;
+}
 
 #pragma maek -- AlertViewDelegate
 - (void)didClikedButtonAtIndex:(NSInteger)buttonIndex Type:(AlertViewType)type
@@ -199,6 +274,32 @@
     [_menuView showMenu];
 }
 
+- (void)keyboardWillShow:(NSNotification*)notication
+{
+    CGFloat bottomY = CGRectGetMaxY(_footerView.frame) + StatusBarHeight + NaviBarHeight + 15;
+    NSDictionary* info = [notication userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到键盘的高度
+    
+    if (DeviceHeight - kbSize.height < bottomY) {
+        CGPoint offsetY = _tableView.contentOffset;
+        offsetY.y = kbSize.height + bottomY - DeviceHeight;
+        _tableView.contentOffset = offsetY;
+    }
+    
+    _tableView.bounces = NO;
+    [_tableView addGestureRecognizer:_tapBg];
+}
+
+- (void)keyboardWillHide
+{
+    CGPoint offsetY = _tableView.contentOffset;
+    offsetY.y = 0;
+    _tableView.contentOffset = offsetY;
+    
+    _tableView.bounces = YES;
+    [_tableView removeGestureRecognizer:_tapBg];
+}
+
 #pragma mark -- private method
 - (BOOL)getAddressBookStatus
 {
@@ -207,6 +308,23 @@
         return NO;
     }
     return YES;
+}
+
+- (void)resignAllFirstResponder
+{
+    [_textFieldCell.textField resignFirstResponder];
+}
+
+-(void)addKeyboardEventObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)removeKeyboardEventObserver
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 @end

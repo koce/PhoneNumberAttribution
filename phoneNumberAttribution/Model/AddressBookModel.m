@@ -56,6 +56,18 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     [self updataAddressBookWithOption:UpdataOptionRestore];
 }
 
+- (NSString *)attributionWithPhoneNumber:(NSString *)phoneNumber
+{
+    if (phoneNumber.length == 7) {
+        phoneNumber = [phoneNumber stringByAppendingString:@"1111"];
+    }else if (phoneNumber.length == 3){
+        phoneNumber = [phoneNumber stringByAppendingString:@"-00000000"];
+    }else if (phoneNumber.length == 4){
+        phoneNumber = [phoneNumber stringByAppendingString:@"-00000000"];
+    }
+    return [self getLabelWithPhoneNumber:phoneNumber LabelType:NO];
+}
+
 #pragma maek -- private method
 - (void)requstAccessAddressBook
 {
@@ -137,6 +149,11 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
 
 - (NSString *)getLabelWithPhoneNumber:(NSString *)phoneNumber
 {
+    return [self getLabelWithPhoneNumber:phoneNumber LabelType:YES];
+}
+
+- (NSString *)getLabelWithPhoneNumber:(NSString *)phoneNumber LabelType:(BOOL)labelType
+{
     NSString *phone = [StringHelper getPhoneNumberWithString:phoneNumber];
     if ([phone isEqualToString:@""] || !phone) {
         return @"";
@@ -150,11 +167,13 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
         type = @"电话";
     }
     
-    NSString *city = [StringHelper getCityWithString:area];
-    NSString *provice = [StringHelper getProviceWithString:area];
-    area = [provice stringByAppendingString:city];
-    
-    type = [StringHelper getSimpleMobileTypeWithString:type];
+    if (labelType) {
+        NSString *city = [StringHelper getCityWithString:area];
+        NSString *provice = [StringHelper getProviceWithString:area];
+        area = [provice stringByAppendingString:city];
+        
+        type = [StringHelper getSimpleMobileTypeWithString:type];
+    }
     
     if (![area isEqualToString:@""] && area) {
         return [NSString stringWithFormat:@"%@%@", area, type];
