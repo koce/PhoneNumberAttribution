@@ -63,6 +63,7 @@ static SQLHelper*       sqlHelper;
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const unsigned char *areaName = sqlite3_column_text(stmt, 0);
             areaString = [NSString stringWithUTF8String:(const char*)areaName];
+            break;
         }
         sqlite3_finalize(stmt);
     }
@@ -78,6 +79,7 @@ static SQLHelper*       sqlHelper;
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const unsigned char *areaName = sqlite3_column_text(stmt, 0);
             areaString = [NSString stringWithUTF8String:(const char*)areaName];
+            break;
         }
         sqlite3_finalize(stmt);
     }

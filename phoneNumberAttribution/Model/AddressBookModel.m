@@ -111,6 +111,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
         ABMultiValueRef phoneNumber = ABRecordCopyValue(person, kABPersonPhoneProperty);
         ABMutableMultiValueRef ph = ABMultiValueCreateMutableCopy(phoneNumber);
         CFIndex phoneCount = ABMultiValueGetCount(phoneNumber);
+        BOOL isUpdate = NO;
         for (int j = 0; j < phoneCount; j++) {
             CFStringRef label = ABMultiValueCopyLabelAtIndex(phoneNumber, j);
             CFStringRef phone = ABMultiValueCopyValueAtIndex(phoneNumber, j);
@@ -125,15 +126,18 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
                     abeyanceLabel = (__bridge CFStringRef)labelString;
                 }
             }
-            
-            ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);
-            ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil);
-            
-            phoneNumber = ABRecordCopyValue(person, kABPersonPhoneProperty);
-            label = ABMultiValueCopyLabelAtIndex(phoneNumber, j);
-            phone = ABMultiValueCopyValueAtIndex(phoneNumber, j);
+            NSString *labelStringOld = (__bridge NSString*)label;
+            NSString *labelStringNew = (__bridge NSString*)abeyanceLabel;
+            if ([labelStringOld isEqualToString:labelStringNew]) {
+                isUpdate = NO;
+            }else{
+                ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);
+                ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil);
+            }
         }
-        ABAddressBookSave(_adressBookRef, nil);
+        if (isUpdate) {
+            ABAddressBookSave(_adressBookRef, nil);
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             _status = [NSString stringWithFormat:@"已%@%d/%d个联系人", optionString, i + 1, (int)num];
             _progress = (float)(i + 1) / (float)num;
@@ -176,7 +180,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     }
     
     if (![area isEqualToString:@""] && area) {
-        return [NSString stringWithFormat:@"%@%@", area, type];
+        return [NSString stringWithFormat:@"%@ %@", area, type];
     }
     return @"";
 }
