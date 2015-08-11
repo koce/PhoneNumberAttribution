@@ -125,12 +125,15 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
                 }else{
                     abeyanceLabel = (__bridge CFStringRef)labelString;
                 }
+            }else if (option == UpdataOptionRestore){
+                abeyanceLabel = kABHomeLabel;
             }
             NSString *labelStringOld = (__bridge NSString*)label;
             NSString *labelStringNew = (__bridge NSString*)abeyanceLabel;
             if ([labelStringOld isEqualToString:labelStringNew]) {
                 isUpdate = NO;
             }else{
+                isUpdate = YES;
                 ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);
                 ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil);
             }
