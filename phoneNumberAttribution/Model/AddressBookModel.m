@@ -39,9 +39,14 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
 - (instancetype)init
 {
     if (self = [super init]) {
-        _adressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+        
     }
     return self;
+}
+
+- (void)dealloc
+{
+    CFRelease(_records);
 }
 
 - (void)updataAddressBook
@@ -71,15 +76,18 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
 #pragma maek -- private method
 - (void)requstAccessAddressBook
 {
+    _adressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    __block CFArrayRef array;
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(_adressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
-                _records = ABAddressBookCopyArrayOfAllPeople(_adressBookRef);
+                array = ABAddressBookCopyArrayOfAllPeople(_adressBookRef);
             }
         });
     }else{
-        _records = ABAddressBookCopyArrayOfAllPeople(_adressBookRef);
+        array = ABAddressBookCopyArrayOfAllPeople(_adressBookRef);
     }
+    _records = array;
 }
 
 - (void)updataAddressBookWithOption:(UpdataOption)option
@@ -110,12 +118,12 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
         ABRecordRef person = CFArrayGetValueAtIndex(_records, i);
         ABMultiValueRef phoneNumber = ABRecordCopyValue(person, kABPersonPhoneProperty);
         ABMutableMultiValueRef ph = ABMultiValueCreateMutableCopy(phoneNumber);
-        CFIndex phoneCount = ABMultiValueGetCount(phoneNumber);
+        CFRelease(phoneNumber);
+        CFIndex phoneCount = ABMultiValueGetCount(ph);
         BOOL isUpdate = NO;
         for (int j = 0; j < phoneCount; j++) {
-            CFStringRef label = ABMultiValueCopyLabelAtIndex(phoneNumber, j);
-            CFStringRef phone = ABMultiValueCopyValueAtIndex(phoneNumber, j);
-            
+            CFStringRef label = ABMultiValueCopyLabelAtIndex(ph, j);
+            CFStringRef phone = ABMultiValueCopyValueAtIndex(ph, j);
             CFStringRef abeyanceLabel = kABHomeLabel;
             
             if (option == UpdataOptionUpdata) {
@@ -137,10 +145,17 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
                 ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);
                 ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil);
             }
+            
+            CFRelease(phone);
+            CFRelease(label);
         }
         if (isUpdate) {
             ABAddressBookSave(_adressBookRef, nil);
         }
+        
+        CFRelease(ph);
+        CFRelease(person);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             _status = [NSString stringWithFormat:@"已%@%d/%d个联系人", optionString, i + 1, (int)num];
             _progress = (float)(i + 1) / (float)num;
@@ -151,7 +166,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
             }
         });
     }
-    _records = nil;
+    CFRelease(_records);
 }
 
 - (NSString *)getLabelWithPhoneNumber:(NSString *)phoneNumber

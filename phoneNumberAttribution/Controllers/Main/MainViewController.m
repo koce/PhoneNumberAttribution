@@ -71,6 +71,8 @@
     [self.view addSubview:_tableView];
     
     _tapBg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignAllFirstResponder)];
+    [_tableView addGestureRecognizer:_tapBg];
+    _tapBg.enabled = NO;
     
     _alertView = [[AlertView alloc] init];
     _alertView.alertDelegate = self;
@@ -287,7 +289,7 @@
     }
     
     _tableView.bounces = NO;
-    [_tableView addGestureRecognizer:_tapBg];
+    _tapBg.enabled = YES;
 }
 
 - (void)keyboardWillHide
@@ -297,7 +299,7 @@
     _tableView.contentOffset = offsetY;
     
     _tableView.bounces = YES;
-    [_tableView removeGestureRecognizer:_tapBg];
+    _tapBg.enabled = NO;
 }
 
 #pragma mark -- private method
