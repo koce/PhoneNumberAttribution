@@ -126,8 +126,12 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
             CFStringRef phone = ABMultiValueCopyValueAtIndex(ph, j);   //某个电话的号码
             CFStringRef abeyanceLabel = kABHomeLabel;   //归属地label（没有create或copy，不需要管理内存）
             
+            //转换CFStringRef为NSString*，并对CFStringRef对象执行release操作（2种方法）
+            NSString *phoneString = (__bridge_transfer NSString *)phone;
+            NSString *labelStringOld = CFBridgingRelease(label);
+            
             if (option == UpdataOptionUpdata) {  //更新通讯录
-                NSString *labelString = [self getLabelWithPhoneNumber:CFBridgingRelease(phone)]; //转换phone为NSString*，并对CFStringRef执行release操作
+                NSString *labelString = [self getLabelWithPhoneNumber:phoneString];
                 
                 if ([labelString isEqualToString:@""] || !labelString) {
                     abeyanceLabel = kABHomeLabel;
@@ -137,10 +141,8 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
                 
             }else if (option == UpdataOptionRestore){  //还原通讯录
                 abeyanceLabel = kABHomeLabel;
-                CFRelease(phone); //release phone
             }
             
-            NSString *labelStringOld = CFBridgingRelease(label); //转换label为NSString*，并对CFStringRef执行release操作
             NSString *labelStringNew = (__bridge NSString*)abeyanceLabel;
             
             if ([labelStringOld isEqualToString:labelStringNew]) {
