@@ -52,13 +52,13 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
 - (void)updataAddressBook
 {
     [self requstAccessAddressBook];
-    [self updataAddressBookWithOption:UpdataOptionUpdata];
+    [self changeAddressBookWithOption:UpdataOptionUpdata];
 }
 
 - (void)restoreAddressBook
 {
     [self requstAccessAddressBook];
-    [self updataAddressBookWithOption:UpdataOptionRestore];
+    [self changeAddressBookWithOption:UpdataOptionRestore];
 }
 
 - (NSString *)attributionWithPhoneNumber:(NSString *)phoneNumber
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     _records = array;
 }
 
-- (void)updataAddressBookWithOption:(UpdataOption)option
+- (void)changeAddressBookWithOption:(UpdataOption)option
 {
     NSString *optionString;
     switch (option) {
@@ -115,47 +115,51 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     });
     
     for (int i = 0; i < num; i++) {
-        ABRecordRef person = CFArrayGetValueAtIndex(_records, i);
-        ABMultiValueRef phoneNumber = ABRecordCopyValue(person, kABPersonPhoneProperty);
-        ABMutableMultiValueRef ph = ABMultiValueCreateMutableCopy(phoneNumber);
-        CFRelease(phoneNumber);
-        CFIndex phoneCount = ABMultiValueGetCount(ph);
+        ABRecordRef person = CFArrayGetValueAtIndex(_records, i);  //获取联系人
+        ABMultiValueRef phoneNumber = ABRecordCopyValue(person, kABPersonPhoneProperty);  //获取联系人的所有电话（常量）
+        ABMutableMultiValueRef ph = ABMultiValueCreateMutableCopy(phoneNumber);   //将联系人的所有电话复制为可变对象
+        CFRelease(phoneNumber);     //release 常量的联系人所有电话
+        CFIndex phoneCount = ABMultiValueGetCount(ph); //联系人的电话数量
         BOOL isUpdate = NO;
         for (int j = 0; j < phoneCount; j++) {
-            CFStringRef label = ABMultiValueCopyLabelAtIndex(ph, j);
-            CFStringRef phone = ABMultiValueCopyValueAtIndex(ph, j);
-            CFStringRef abeyanceLabel = kABHomeLabel;
+            CFStringRef label = ABMultiValueCopyLabelAtIndex(ph, j);   //某个电话的label
+            CFStringRef phone = ABMultiValueCopyValueAtIndex(ph, j);   //某个电话的号码
+            CFStringRef abeyanceLabel = kABHomeLabel;   //归属地label（没有create或copy，不需要管理内存）
             
-            if (option == UpdataOptionUpdata) {
-                NSString *labelString = [self getLabelWithPhoneNumber:(__bridge NSString *)phone];
+            if (option == UpdataOptionUpdata) {  //更新通讯录
+                NSString *labelString = [self getLabelWithPhoneNumber:CFBridgingRelease(phone)]; //转换phone为NSString*，并对CFStringRef执行release操作
+                
                 if ([labelString isEqualToString:@""] || !labelString) {
                     abeyanceLabel = kABHomeLabel;
                 }else{
                     abeyanceLabel = (__bridge CFStringRef)labelString;
                 }
-            }else if (option == UpdataOptionRestore){
+                
+            }else if (option == UpdataOptionRestore){  //还原通讯录
                 abeyanceLabel = kABHomeLabel;
+                CFRelease(phone); //release phone
             }
-            NSString *labelStringOld = (__bridge NSString*)label;
+            
+            NSString *labelStringOld = CFBridgingRelease(label); //转换label为NSString*，并对CFStringRef执行release操作
             NSString *labelStringNew = (__bridge NSString*)abeyanceLabel;
+            
             if ([labelStringOld isEqualToString:labelStringNew]) {
                 isUpdate = NO;
             }else{
                 isUpdate = YES;
-                ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);
-                ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil);
+                ABMultiValueReplaceLabelAtIndex(ph, abeyanceLabel, j);   //修改电话的label
+                ABRecordSetValue(person, kABPersonPhoneProperty, ph, nil); //修改联系人的电话属性
             }
-            
-            CFRelease(phone);
-            CFRelease(label);
         }
         if (isUpdate) {
-            ABAddressBookSave(_adressBookRef, nil);
+            ABAddressBookSave(_adressBookRef, nil); //保存通讯录
         }
         
+        //release
         CFRelease(ph);
         CFRelease(person);
         
+        //更新UI
         dispatch_async(dispatch_get_main_queue(), ^{
             _status = [NSString stringWithFormat:@"已%@%d/%d个联系人", optionString, i + 1, (int)num];
             _progress = (float)(i + 1) / (float)num;
@@ -169,6 +173,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     CFRelease(_records);
 }
 
+//根据电话号码获取归属地
 - (NSString *)getLabelWithPhoneNumber:(NSString *)phoneNumber
 {
     return [self getLabelWithPhoneNumber:phoneNumber LabelType:YES];
