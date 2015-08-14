@@ -124,11 +124,12 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
         for (int j = 0; j < phoneCount; j++) {
             CFStringRef label = ABMultiValueCopyLabelAtIndex(ph, j);   //某个电话的label
             CFStringRef phone = ABMultiValueCopyValueAtIndex(ph, j);   //某个电话的号码
-            CFStringRef abeyanceLabel = kABHomeLabel;   //归属地label（没有create或copy，不需要管理内存）
             
             //转换CFStringRef为NSString*，并对CFStringRef对象执行release操作（2种方法）
             NSString *phoneString = (__bridge_transfer NSString *)phone;
             NSString *labelStringOld = CFBridgingRelease(label);
+            
+            CFStringRef abeyanceLabel = kABHomeLabel;   //归属地label（没有create或copy，不需要管理内存）
             
             if (option == UpdataOptionUpdata) {  //更新通讯录
                 NSString *labelString = [self getLabelWithPhoneNumber:phoneString];
