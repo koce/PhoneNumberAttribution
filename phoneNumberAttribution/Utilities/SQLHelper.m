@@ -36,6 +36,21 @@ static SQLHelper*       sqlHelper;
     return self;
 }
 
+#pragma mark -- private method
+- (void)openSQL
+{
+    if (sqlite3_open([[StringHelper getDataBasePath] UTF8String], &_database) != SQLITE_OK) {
+        sqlite3_close(_database);
+        NSAssert(0, @"Failed to open database");
+    }
+}
+
+- (void)closeSQL
+{
+    sqlite3_close(_database);
+}
+
+#pragma mark -- public method
 - (NSString *)selectAreaWithAreaCode:(NSString *)areaCode
 {
     NSString *SelectArea = [NSString stringWithFormat:@"SELECT MobileArea FROM Dm_Mobile where AreaCode='%@'", areaCode];
@@ -85,19 +100,6 @@ static SQLHelper*       sqlHelper;
     }
     [self closeSQL];
     return areaString;
-}
-
-- (void)openSQL
-{
-    if (sqlite3_open([[StringHelper getDataBasePath] UTF8String], &_database) != SQLITE_OK) {
-        sqlite3_close(_database);
-        NSAssert(0, @"Failed to open database");
-    }
-}
-
-- (void)closeSQL
-{
-    sqlite3_close(_database);
 }
 
 @end

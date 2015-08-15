@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  phoneNumberAttribution
+
+  Created by 赵嘉诚 on 15/8/14.
+  Copyright (c) 2015年 赵嘉诚. All rights reserved.
+*/
+
+CFBundleDisplayName = "AddressBook Helper";

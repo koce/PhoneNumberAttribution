@@ -32,6 +32,8 @@
 		DEF0B75F1B73408600631889 /* MenuBtnImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B75E1B73408600631889 /* MenuBtnImage.png */; };
 		DEF0B7641B73469100631889 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF0B7631B73469100631889 /* MenuView.m */; };
 		DEF0B7661B73489800631889 /* MenuBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B7651B73489800631889 /* MenuBackImage.png */; };
+		DEF5CBF21B7D9E53004D1636 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEF5CBF41B7D9E53004D1636 /* Localizable.strings */; };
+		DEF5CBF81B7D9EDF004D1636 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEF5CBFA1B7D9EDF004D1636 /* InfoPlist.strings */; };
 		DEFF77E41B78567400A9DAB9 /* MainTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,10 @@
 		DEF0B7621B73469100631889 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuView.h; path = Views/Menu/MenuView.h; sourceTree = "<group>"; };
 		DEF0B7631B73469100631889 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuView.m; path = Views/Menu/MenuView.m; sourceTree = "<group>"; };
 		DEF0B7651B73489800631889 /* MenuBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuBackImage.png; path = Resources/Image/MenuBackImage.png; sourceTree = "<group>"; };
+		DEF5CBF31B7D9E53004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DEF5CBF51B7D9E56004D1636 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		DEF5CBF91B7D9EDF004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DEF5CBFB1B7D9EE1004D1636 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		DEFF77E21B78567400A9DAB9 /* MainTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTableFooterView.h; path = Views/Main/MainTableFooterView.h; sourceTree = "<group>"; };
 		DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTableFooterView.m; path = Views/Main/MainTableFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +169,8 @@
 				DEF0B7601B73414A00631889 /* FileString.h */,
 				DEEF93591B719870005D369F /* DefineString.h */,
 				DEEF935A1B7198A5005D369F /* PrefixHeader.pch */,
+				DEF5CBF41B7D9E53004D1636 /* Localizable.strings */,
+				DEF5CBFA1B7D9EDF004D1636 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = DEEF930F1B7194AD005D369F;
 			productRefGroup = DEEF93191B7194AD005D369F /* Products */;
@@ -400,6 +409,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEF0B74C1B72FC3500631889 /* Data.sqlite in Resources */,
+				DEF5CBF81B7D9EDF004D1636 /* InfoPlist.strings in Resources */,
+				DEF5CBF21B7D9E53004D1636 /* Localizable.strings in Resources */,
 				DEEF93291B7194AD005D369F /* Images.xcassets in Resources */,
 				DEF0B7421B72E99600631889 /* SVProgressHUD.bundle in Resources */,
 				DEF0B75F1B73408600631889 /* MenuBtnImage.png in Resources */,
@@ -457,6 +468,29 @@
 			targetProxy = DEEF93321B7194AD005D369F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DEF5CBF41B7D9E53004D1636 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DEF5CBF31B7D9E53004D1636 /* en */,
+				DEF5CBF51B7D9E56004D1636 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		DEF5CBFA1B7D9EDF004D1636 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DEF5CBF91B7D9EDF004D1636 /* en */,
+				DEF5CBFB1B7D9EE1004D1636 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DEEF93391B7194AD005D369F /* Debug */ = {
