@@ -63,8 +63,6 @@
 		DEEF93511B719733005D369F /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootNavigationController.m; path = Controllers/RootNavigationController.m; sourceTree = "<group>"; };
 		DEEF93531B719807005D369F /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringHelper.h; path = Utilities/StringHelper.h; sourceTree = "<group>"; };
 		DEEF93541B719807005D369F /* StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringHelper.m; path = Utilities/StringHelper.m; sourceTree = "<group>"; };
-		DEEF93591B719870005D369F /* DefineString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineString.h; sourceTree = "<group>"; };
-		DEEF935A1B7198A5005D369F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		DEEF935B1B719A20005D369F /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTableViewCell.h; path = Views/Main/MainTableViewCell.h; sourceTree = "<group>"; };
 		DEEF935C1B719A20005D369F /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTableViewCell.m; path = Views/Main/MainTableViewCell.m; sourceTree = "<group>"; };
 		DEEF935F1B71A505005D369F /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageHelper.h; path = Utilities/ImageHelper.h; sourceTree = "<group>"; };
@@ -89,12 +87,14 @@
 		DEF0B75A1B733AFB00631889 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertView.h; path = Views/CommanViews/AlertView.h; sourceTree = "<group>"; };
 		DEF0B75B1B733AFB00631889 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertView.m; path = Views/CommanViews/AlertView.m; sourceTree = "<group>"; };
 		DEF0B75E1B73408600631889 /* MenuBtnImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuBtnImage.png; path = Resources/Image/MenuBtnImage.png; sourceTree = "<group>"; };
-		DEF0B7601B73414A00631889 /* FileString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileString.h; sourceTree = "<group>"; };
 		DEF0B7621B73469100631889 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuView.h; path = Views/Menu/MenuView.h; sourceTree = "<group>"; };
 		DEF0B7631B73469100631889 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuView.m; path = Views/Menu/MenuView.m; sourceTree = "<group>"; };
 		DEF0B7651B73489800631889 /* MenuBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuBackImage.png; path = Resources/Image/MenuBackImage.png; sourceTree = "<group>"; };
 		DEF1473D1B7EC48E000FC7A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Support Files/Info.plist"; sourceTree = "<group>"; };
 		DEF1473F1B7EC4BA000FC7A6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Support Files/main.m"; sourceTree = "<group>"; };
+		DEF147411B7EC560000FC7A6 /* DefineString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DefineString.h; path = "Support Files/DefineString.h"; sourceTree = "<group>"; };
+		DEF147421B7EC560000FC7A6 /* FileString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileString.h; path = "Support Files/FileString.h"; sourceTree = "<group>"; };
+		DEF147431B7EC560000FC7A6 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = "Support Files/PrefixHeader.pch"; sourceTree = "<group>"; };
 		DEF5CBF31B7D9E53004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DEF5CBF51B7D9E56004D1636 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DEF5CBF91B7D9EDF004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -166,9 +166,9 @@
 			children = (
 				DEF1473D1B7EC48E000FC7A6 /* Info.plist */,
 				DEF1473F1B7EC4BA000FC7A6 /* main.m */,
-				DEF0B7601B73414A00631889 /* FileString.h */,
-				DEEF93591B719870005D369F /* DefineString.h */,
-				DEEF935A1B7198A5005D369F /* PrefixHeader.pch */,
+				DEF147411B7EC560000FC7A6 /* DefineString.h */,
+				DEF147421B7EC560000FC7A6 /* FileString.h */,
+				DEF147431B7EC560000FC7A6 /* PrefixHeader.pch */,
 				DEF5CBF41B7D9E53004D1636 /* Localizable.strings */,
 				DEF5CBFA1B7D9EDF004D1636 /* InfoPlist.strings */,
 			);
@@ -580,7 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/Support Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "phoneNumberAttribution/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -594,7 +594,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/Support Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "phoneNumberAttribution/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
