@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DEEF931E1B7194AD005D369F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEF931D1B7194AD005D369F /* main.m */; };
 		DEEF93211B7194AD005D369F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEF93201B7194AD005D369F /* AppDelegate.m */; };
 		DEEF93291B7194AD005D369F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEEF93281B7194AD005D369F /* Images.xcassets */; };
 		DEEF93381B7194AD005D369F /* phoneNumberAttributionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DEEF93371B7194AD005D369F /* phoneNumberAttributionTests.m */; };
@@ -32,6 +31,7 @@
 		DEF0B75F1B73408600631889 /* MenuBtnImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B75E1B73408600631889 /* MenuBtnImage.png */; };
 		DEF0B7641B73469100631889 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF0B7631B73469100631889 /* MenuView.m */; };
 		DEF0B7661B73489800631889 /* MenuBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF0B7651B73489800631889 /* MenuBackImage.png */; };
+		DEF147401B7EC4BA000FC7A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF1473F1B7EC4BA000FC7A6 /* main.m */; };
 		DEF5CBF21B7D9E53004D1636 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEF5CBF41B7D9E53004D1636 /* Localizable.strings */; };
 		DEF5CBF81B7D9EDF004D1636 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEF5CBFA1B7D9EDF004D1636 /* InfoPlist.strings */; };
 		DEFF77E41B78567400A9DAB9 /* MainTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEFF77E31B78567400A9DAB9 /* MainTableFooterView.m */; };
@@ -49,8 +49,6 @@
 
 /* Begin PBXFileReference section */
 		DEEF93181B7194AD005D369F /* phoneNumberAttribution.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = phoneNumberAttribution.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DEEF931C1B7194AD005D369F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DEEF931D1B7194AD005D369F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEEF931F1B7194AD005D369F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DEEF93201B7194AD005D369F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DEEF93281B7194AD005D369F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -95,6 +93,8 @@
 		DEF0B7621B73469100631889 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuView.h; path = Views/Menu/MenuView.h; sourceTree = "<group>"; };
 		DEF0B7631B73469100631889 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuView.m; path = Views/Menu/MenuView.m; sourceTree = "<group>"; };
 		DEF0B7651B73489800631889 /* MenuBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuBackImage.png; path = Resources/Image/MenuBackImage.png; sourceTree = "<group>"; };
+		DEF1473D1B7EC48E000FC7A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Support Files/Info.plist"; sourceTree = "<group>"; };
+		DEF1473F1B7EC4BA000FC7A6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Support Files/main.m"; sourceTree = "<group>"; };
 		DEF5CBF31B7D9E53004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DEF5CBF51B7D9E56004D1636 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DEF5CBF91B7D9EDF004D1636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -164,8 +164,8 @@
 		DEEF931B1B7194AD005D369F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DEEF931C1B7194AD005D369F /* Info.plist */,
-				DEEF931D1B7194AD005D369F /* main.m */,
+				DEF1473D1B7EC48E000FC7A6 /* Info.plist */,
+				DEF1473F1B7EC4BA000FC7A6 /* main.m */,
 				DEF0B7601B73414A00631889 /* FileString.h */,
 				DEEF93591B719870005D369F /* DefineString.h */,
 				DEEF935A1B7198A5005D369F /* PrefixHeader.pch */,
@@ -434,7 +434,6 @@
 			files = (
 				DEEF93211B7194AD005D369F /* AppDelegate.m in Sources */,
 				DEF0B75C1B733AFB00631889 /* AlertView.m in Sources */,
-				DEEF931E1B7194AD005D369F /* main.m in Sources */,
 				DEEF935D1B719A20005D369F /* MainTableViewCell.m in Sources */,
 				DEEF93611B71A505005D369F /* ImageHelper.m in Sources */,
 				DEEF93481B719557005D369F /* RootViewController.m in Sources */,
@@ -444,6 +443,7 @@
 				DEEF93551B719807005D369F /* StringHelper.m in Sources */,
 				DEEF93641B71A829005D369F /* MainTableHeaderView.m in Sources */,
 				DEF0B7431B72E99600631889 /* SVProgressHUD.m in Sources */,
+				DEF147401B7EC4BA000FC7A6 /* main.m in Sources */,
 				DEF0B7471B72F0DB00631889 /* SQLHelper.m in Sources */,
 				DEF0B7521B7306B100631889 /* AddressBookModel.m in Sources */,
 				DEEF934F1B7196DE005D369F /* MainViewController.m in Sources */,
@@ -581,7 +581,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/PrefixHeader.pch";
-				INFOPLIST_FILE = phoneNumberAttribution/Info.plist;
+				INFOPLIST_FILE = "phoneNumberAttribution/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -595,7 +595,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/phoneNumberAttribution/PrefixHeader.pch";
-				INFOPLIST_FILE = phoneNumberAttribution/Info.plist;
+				INFOPLIST_FILE = "phoneNumberAttribution/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
