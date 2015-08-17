@@ -24,6 +24,9 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     __block float           _progress;
 }
 
+
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundUpdateTask;
+
 @end
 
 @implementation AddressBookModel
@@ -50,6 +53,21 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     CFRelease(_records);
 }
 
+#pragma mark -- BackgroundTask
+- (void) beginBackgroundUpdateTask
+{
+    self.backgroundUpdateTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackgroundUpdateTask];
+    }];
+}
+
+- (void) endBackgroundUpdateTask
+{
+    [[UIApplication sharedApplication] endBackgroundTask: self.backgroundUpdateTask];
+    self.backgroundUpdateTask = UIBackgroundTaskInvalid;
+}
+
+#pragma mark -- public method
 - (void)updataAddressBook
 {
     [self requstAccessAddressBook];
@@ -93,6 +111,8 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
 
 - (void)changeAddressBookWithOption:(UpdataOption)option
 {
+    [self beginBackgroundUpdateTask]; //后台任务
+    
     switch (option) {
         case UpdataOptionUpdata:{
             _optionString = @"更新";
@@ -110,6 +130,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     NSLog(@"共有%d名联系人", (int)num);
     _status = [NSString stringWithFormat:@"已%@%d/%d个联系人", _optionString, 0, (int)num];
     _progress = .0;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD showProgress:_progress status:_status maskType:SVProgressHUDMaskTypeBlack];
     });
@@ -117,7 +138,10 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     for (int i = 0; i < num; i++) {
         [self changePersonInIndex:i Option:option TotalCount:(int)num];
     }
+    
     CFRelease(_records);
+    
+    [self endBackgroundUpdateTask];//结束后台任务
 }
 
 //修改联系人信息
@@ -172,6 +196,7 @@ typedef NS_ENUM(NSInteger, UpdataOption) {
     
     //更新UI
     dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"已%@%d/%d个联系人", _optionString, index + 1, num);
         _status = [NSString stringWithFormat:@"已%@%d/%d个联系人", _optionString, index + 1, num];
         _progress = (float)(index + 1) / (float)num;
         [SVProgressHUD showProgress:_progress status:_status maskType:SVProgressHUDMaskTypeBlack];
