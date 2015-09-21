@@ -250,7 +250,7 @@
     return YES;
 }
 
-#pragma maek -- AlertViewDelegate
+#pragma mark -- AlertViewDelegate
 - (void)didClikedButtonAtIndex:(NSInteger)buttonIndex Type:(AlertViewType)type
 {
     if (buttonIndex == 0) {
